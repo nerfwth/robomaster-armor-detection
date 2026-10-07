@@ -1,0 +1,29 @@
+GALAXY_CAMERA := $(HOME)/galaxy_sdk/Galaxy_Linux-x86_Gige-U3_32bits-64bits_2.6.2606.9251/Galaxy_Linux-x86_Gige-U3_32bits-64bits_2.6.2606.9251/Galaxy_camera
+
+CXX := g++
+
+NAME := ArmorCamera
+
+SRCS := \
+        ArmorCamera.cpp \
+        Common/Common.cpp \
+        HybridArmorDetector.cpp \
+        traditional_fallback.cpp
+
+OBJS := $(SRCS:.cpp=.o)
+
+OPENCV := $(shell pkg-config --cflags --libs opencv4)
+
+CPPFLAGS := -std=c++17 -O3 -w -I./ -L/usr/lib -L./ -Wl,-rpath=/usr/lib:./ -I$(GALAXY_CAMERA)/inc
+LDFLAGS := -lgxiapi -lpthread -lspdlog -lfmt $(OPENCV)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) -o $@ $^ $(CPPFLAGS) $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CPPFLAGS) $(shell pkg-config --cflags opencv4) -c -o $@ $<
+
+clean:
+	rm -f $(OBJS) $(NAME)

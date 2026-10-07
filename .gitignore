@@ -1,0 +1,23 @@
+# Build files
+*.o
+ArmorCamera
+
+# CMake
+build/
+CMakeFiles/
+CMakeCache.txt
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.log
+*.tmp
+*~
+.DS_Store
+
+# Backup files
+*_backup*
+*_working*
+*_before*
